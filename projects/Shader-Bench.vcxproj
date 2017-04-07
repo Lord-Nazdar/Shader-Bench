@@ -72,9 +72,16 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>W:\C++\Shader-Bench\3rdparty\glfw\include;W:\C++\Shader-Bench\3rdparty\bimg\include;W:\C++\Shader-Bench\3rdparty\bgfx\include;W:\C++\Shader-Bench\3rdparty\bx\include</AdditionalIncludeDirectories>
       <SDLCheck>true</SDLCheck>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <PreprocessorDefinitions>__STDC_LIMIT_MACROS;__STDC_FORMAT_MACROS;__STDC_CONSTANT_MACROS;_DEBUG;WIN32;_WIN32;_HAS_EXCEPTIONS=0;_HAS_ITERATOR_DEBUGGING=0;_SCL_SECURE=0;_SECURE_SCL=0;_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;BGFX_CONFIG_DEBUG=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>W:\C++\Shader-Bench\3rdparty\bgfx\.build\win32_vs2015\bin;W:\C++\Shader-Bench\3rdparty\glfw\build\src\Debug</AdditionalLibraryDirectories>
+      <AdditionalDependencies>bgfxDebug.lib;bxDebug.lib;bimg_decodeDebug.lib;bimg_encodeDebug.lib;bimgDebug.lib;gdi32.lib;psapi.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -90,10 +97,13 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>W:\Lib\glfw-3.2.1.bin.WIN32\include;W:\C++\Shader-Bench\3rdparty\bimg\include;W:\C++\Shader-Bench\3rdparty\bgfx\include;W:\C++\Shader-Bench\3rdparty\bx\include;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>W:\C++\Shader-Bench\3rdparty\bgfx\.build\win32_vs2015\bin;W:\Lib\glfw-3.2.1.bin.WIN32\lib-vc2015;</AdditionalLibraryDirectories>
+      <AdditionalDependencies>bgfxDebug.lib;bxDebug.lib;bimg_decodeDebug.lib;bimg_encodeDebug.lib;bimgDebug.lib;gdi32.lib;psapi.lib;glfw3.lib;;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -110,6 +120,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\shader-bench.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
