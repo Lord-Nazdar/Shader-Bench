@@ -18,5 +18,21 @@
     <ClCompile Include="..\src\shader-bench.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\BGFXGraphics.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\res\shaders\cube.vs.sc">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\res\shaders\cube.fs.sc">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\GraphicsInterface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
