@@ -13,3 +13,6 @@
 [submodule "3rdparty/tinyobjloader"]
 	path = 3rdparty/tinyobjloader
 	url = https://github.com/syoyo/tinyobjloader.git
+[submodule "3rdparty/lodepng"]
+	path = 3rdparty/lodepng
+	url = https://github.com/lvandeve/lodepng.git
