@@ -76,11 +76,11 @@
       <SDLCheck>true</SDLCheck>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <PreprocessorDefinitions>__STDC_LIMIT_MACROS;__STDC_FORMAT_MACROS;__STDC_CONSTANT_MACROS;_DEBUG;WIN32;_WIN32;_HAS_EXCEPTIONS=0;_HAS_ITERATOR_DEBUGGING=0;_SCL_SECURE=0;_SECURE_SCL=0;_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;BGFX_CONFIG_DEBUG=1;BGFX_Graphics_Interface;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>__STDC_LIMIT_MACROS;__STDC_FORMAT_MACROS;__STDC_CONSTANT_MACROS;_DEBUG;WIN32;_WIN32;_HAS_EXCEPTIONS=0;_HAS_ITERATOR_DEBUGGING=0;_SCL_SECURE=0;_SECURE_SCL=0;_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;BGFX_CONFIG_DEBUG=1;Sirona_Graphics_Interface;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>..\3rdparty\bgfx\.build\win32_vs2015\bin;..\3rdparty\glfw\build\src\Debug</AdditionalLibraryDirectories>
-      <AdditionalDependencies>bgfxDebug.lib;bxDebug.lib;bimg_decodeDebug.lib;bimg_encodeDebug.lib;bimgDebug.lib;gdi32.lib;psapi.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>bgfxDebug.lib;bxDebug.lib;bimg_decodeDebug.lib;bimg_encodeDebug.lib;bimgDebug.lib;gdi32.lib;psapi.lib;glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -125,6 +125,7 @@
     <ClCompile Include="..\src\BGFXGraphics.cpp" />
     <ClCompile Include="..\src\Filesystem.cpp" />
     <ClCompile Include="..\src\shader-bench.cpp" />
+    <ClCompile Include="..\src\SironaGraphics.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\res\shaders\cube.fs.sc" />

@@ -22,7 +22,15 @@ int main( int _argc, char** _argv ) {
 	uint16_t height = 720;
 
 	glfwInit();
+
+#ifdef BGFX_Graphics_Interface
 	glfwWindowHint( GLFW_CLIENT_API, GLFW_NO_API );
+#else
+	glfwWindowHint( GLFW_CONTEXT_VERSION_MAJOR, 4 );
+	glfwWindowHint( GLFW_CONTEXT_VERSION_MINOR, 5 );
+	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+#endif // BGFX_Graphics_Interface
+
 	glfwWindowHint( GLFW_RESIZABLE, false );
 	GLFWwindow* window = glfwCreateWindow( width, height, "Shader Bench", NULL, NULL );
 

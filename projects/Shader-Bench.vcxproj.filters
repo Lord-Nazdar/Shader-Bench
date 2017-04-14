@@ -30,6 +30,9 @@
     <ClCompile Include="..\src\AssetLoader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\SironaGraphics.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\res\shaders\cube.vs.sc">
