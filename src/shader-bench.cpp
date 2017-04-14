@@ -1,14 +1,21 @@
 #include <GLFW\glfw3.h>
 #include <GLFW\glfw3native.h>
-#include <bgfx\bgfx.h>
-#include <bx\bx.h>
-#include <bx\float4x4_t.h>
 #include "GraphicsInterface.h"
 #include <string>
 #include <fstream>
 #include <iostream>
+#define GLM_COORDINATE_SYSTEM GLM_LEFT_HANDED
+#include <glm.hpp>
+#include <gtc\type_ptr.hpp>
+#include <gtc\matrix_transform.hpp>
 
 #include "AssetLoader.h"
+
+void ReloadProgram( uint16_t &program) {
+	uint16_t vertexShader = GraphicsInterface::CreateShader( "Shaders/cube.vs.bin" );
+	uint16_t fragmentShader = GraphicsInterface::CreateShader( "Shaders/cube.fs.bin" );
+	program = GraphicsInterface::CreateProgram( vertexShader, fragmentShader );
+}
 
 int main( int _argc, char** _argv ) {
 	uint16_t width = 1280;
@@ -35,18 +42,20 @@ int main( int _argc, char** _argv ) {
 	uint16_t normalMapLocation = GraphicsInterface::GetUniformLocation( "s_texNormal", GraphicsInterface::UniformType::INT1 );
 	uint16_t normalMapTexture = GraphicsInterface::CreateTexture( "Textures/NormalSphere.png" );
 
-	float up[3]  = { 0.0f, 0.0f,   1.0f };
-	float at[3]  = { 0.0f, 0.0f,   0.0f };
-	float eye[3] = { 0.0f, -25.0f, 15.0f };
-	float view[16];
-	bx::mtxLookAt(view, eye, at, up);
+	// Get view matrix
+	glm::vec3 up( 0.0f, 0.0f, 1.0f );
+	glm::vec3 center( 0.0f, 0.0f, 0.0f );
+	glm::vec3 eye( 0.0f, -25.0f, 0.0f );
+	glm::mat4 view = glm::lookAt( eye, center, up );
 
-	float proj[16];
-	bx::mtxProj(proj, 60.0f, float(width)/float(height), 0.1f, 100.0f, bgfx::getCaps()->homogeneousDepth);
-	bgfx::setViewTransform( 0, view, proj );
+	// Get perspective matrix
+	glm::mat4 projection = glm::perspective( glm::radians(60.0f), float( width ) / float( height ), 0.1f, 100.0f );
 
+	GraphicsInterface::SetProjectionViewTransform( view, projection );
 
+	bool key_enterPressed = false;
 	do {
+
 		GraphicsInterface::SetViewport( 0, 0, width, height );
 
 		GraphicsInterface::SubmitDummyDrawcall();
@@ -56,6 +65,17 @@ int main( int _argc, char** _argv ) {
 
 
 		GraphicsInterface::SwapBuffers();
+
+		if ( glfwGetKey( window, GLFW_KEY_ENTER ) == GLFW_PRESS && !key_enterPressed) {
+			ReloadProgram( program );
+			std::cout << "Program reloaded" << std::endl;
+			key_enterPressed = true;
+		}
+
+		if ( glfwGetKey( window, GLFW_KEY_ENTER ) == GLFW_RELEASE && key_enterPressed ) {
+			key_enterPressed = false;
+		}
+
 		glfwPollEvents();
 	} while ( glfwGetKey( window, GLFW_KEY_ESCAPE ) != GLFW_PRESS && glfwWindowShouldClose( window ) == 0 );
 

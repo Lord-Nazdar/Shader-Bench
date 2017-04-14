@@ -70,6 +70,15 @@ void GraphicsInterface::SetViewport( const uint16_t x, const uint16_t y, const u
 	bgfx::setViewRect( 0, x, y, width, height );
 }
 
+
+void GraphicsInterface::SetProjectionViewTransform( const glm::mat4 & view, const glm::mat4 & projection ) {
+	bgfx::setViewTransform( 0, &view, &projection );
+}
+
+void GraphicsInterface::SetModelTransform( const glm::mat4 & model ) {
+	bgfx::setTransform( &model );
+}
+
 void GraphicsInterface::BindTexture( const uint8_t stage, const uint16_t location, const uint16_t texture ) {
 	bgfx::setTexture( stage, bgfx::UniformHandle{ location }, bgfx::TextureHandle{ texture } );
 }

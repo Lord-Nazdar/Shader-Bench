@@ -5,6 +5,7 @@
 #include <GLFW\glfw3native.h>
 #include <memory>
 #include <string>
+#include <glm.hpp>
 
 class AssetLoader;
 
@@ -25,6 +26,9 @@ namespace GraphicsInterface {
 	uint16_t CreateIndexBuffer( const AssetLoader& asset );
 
 	void SetViewport( const uint16_t x, const uint16_t y, const uint16_t width, const uint16_t height );
+
+	void SetProjectionViewTransform( const glm::mat4 &view, const glm::mat4 &projection );
+	void SetModelTransform( const glm::mat4 &model );
 
 	void BindTexture( const uint8_t stage, const uint16_t location, const uint16_t texture );
 	void SubmitDummyDrawcall();

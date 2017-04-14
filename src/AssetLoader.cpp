@@ -38,7 +38,7 @@ void AssetLoader::LoadAsset( const std::string &filename ) {
 	for ( auto shape : shapes ) {
 		size_t index_offset = 0;
 
-		AssetVertexData.resize( shape.mesh.num_face_vertices.size() );
+		AssetVertexData.reserve( shape.mesh.num_face_vertices.size() );
 		for ( size_t f = 0; f < shape.mesh.num_face_vertices.size(); f++ ) {
 
 			int fv = shape.mesh.num_face_vertices[f];
@@ -46,7 +46,7 @@ void AssetLoader::LoadAsset( const std::string &filename ) {
 			for ( size_t v = 0; v < fv; v++ ) {
 				// access to vertex
 				tinyobj::index_t idx = shape.mesh.indices[index_offset + v];
-				Indices.push_back( idx.vertex_index );
+				Indices.push_back( (f*3)+v);
 
 				float vx = attrib.vertices[3 * idx.vertex_index + 0];
 				float vy = attrib.vertices[3 * idx.vertex_index + 1];
@@ -57,7 +57,7 @@ void AssetLoader::LoadAsset( const std::string &filename ) {
 				float tx = attrib.texcoords[2 * idx.texcoord_index + 0];
 				float ty = attrib.texcoords[2 * idx.texcoord_index + 1];
 
-				AssetVertexData.at( idx.vertex_index ) = VertexStructure{ vx, vy, vz, nx, ny, nz, 0.0, 0.0, 0.0, 0.0,0.0,0.0, tx, ty };
+				AssetVertexData.push_back(VertexStructure{ vx, vy, vz, nx, ny, nz, 0.0, 0.0, 0.0, 0.0,0.0,0.0, tx, ty });
 			}
 			index_offset += fv;
 		}
