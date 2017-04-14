@@ -48,14 +48,24 @@ void AssetLoader::LoadAsset( const std::string &filename ) {
 				tinyobj::index_t idx = shape.mesh.indices[index_offset + v];
 				Indices.push_back( (f*3)+v);
 
-				float vx = attrib.vertices[3 * idx.vertex_index + 0];
-				float vy = attrib.vertices[3 * idx.vertex_index + 1];
-				float vz = attrib.vertices[3 * idx.vertex_index + 2];
-				float nx = attrib.normals[3 * idx.normal_index + 0];
-				float ny = attrib.normals[3 * idx.normal_index + 1];
-				float nz = attrib.normals[3 * idx.normal_index + 2];
-				float tx = attrib.texcoords[2 * idx.texcoord_index + 0];
-				float ty = attrib.texcoords[2 * idx.texcoord_index + 1];
+				float vx{ 0 }, vy{ 0 }, vz{ 0 };
+				float nx{ 0 }, ny{ 0 }, nz{ 0 };
+				float tx{ 0 }, ty{ 0 };
+
+				vx = attrib.vertices[3 * idx.vertex_index + 0];
+				vy = attrib.vertices[3 * idx.vertex_index + 1];
+				vz = attrib.vertices[3 * idx.vertex_index + 2];
+
+				if ( attrib.normals.size() > 0 ) {
+					nx = attrib.normals[3 * idx.normal_index + 0];
+					ny = attrib.normals[3 * idx.normal_index + 1];
+					nz = attrib.normals[3 * idx.normal_index + 2];
+				}
+
+				if ( attrib.texcoords.size() > 0 ) {
+					tx = attrib.texcoords[2 * idx.texcoord_index + 0];
+					ty = attrib.texcoords[2 * idx.texcoord_index + 1];
+				}
 
 				AssetVertexData.push_back(VertexStructure{ vx, vy, vz, nx, ny, nz, 0.0, 0.0, 0.0, 0.0,0.0,0.0, tx, ty });
 			}

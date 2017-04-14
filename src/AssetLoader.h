@@ -30,5 +30,5 @@ public:
 	void LoadAsset( const std::string &filename );
 
 	std::vector<VertexStructure> AssetVertexData;
-	std::vector<uint16_t> Indices;
+	std::vector<uint32_t> Indices;
 };

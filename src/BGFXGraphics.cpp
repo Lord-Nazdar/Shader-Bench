@@ -62,7 +62,7 @@ uint16_t GraphicsInterface::CreateVertexBuffer( const AssetLoader & asset ) {
 }
 
 uint16_t GraphicsInterface::CreateIndexBuffer( const AssetLoader & asset ) {
-	uint16_t index = bgfx::createIndexBuffer( bgfx::makeRef( &asset.Indices[0], asset.Indices.size() * sizeof( uint16_t ) ) ).idx;
+	uint16_t index = bgfx::createIndexBuffer( bgfx::makeRef( &asset.Indices[0], asset.Indices.size() * sizeof( uint32_t ) ), BGFX_BUFFER_INDEX32 ).idx;
 	return index;
 }
 
