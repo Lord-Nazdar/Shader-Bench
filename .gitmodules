@@ -1,0 +1,24 @@
+[submodule "3rdparty/bx"]
+	path = 3rdparty/bx
+	url = git://github.com/bkaradzic/bx.git
+[submodule "3rdparty/bimg"]
+	path = 3rdparty/bimg
+	url = git://github.com/bkaradzic/bimg.git
+[submodule "3rdparty/bgfx"]
+	path = 3rdparty/bgfx
+	url = git://github.com/bkaradzic/bgfx.git
+[submodule "3rdparty/glfw"]
+	path = 3rdparty/glfw
+	url = https://github.com/glfw/glfw.git
+[submodule "3rdparty/tinyobjloader"]
+	path = 3rdparty/tinyobjloader
+	url = https://github.com/syoyo/tinyobjloader.git
+[submodule "3rdparty/lodepng"]
+	path = 3rdparty/lodepng
+	url = https://github.com/lvandeve/lodepng.git
+[submodule "3rdparty/imgui"]
+	path = 3rdparty/imgui
+	url = https://github.com/ocornut/imgui.git
+[submodule "3rdparty/glm"]
+	path = 3rdparty/glm
+	url = https://github.com/g-truc/glm.git
