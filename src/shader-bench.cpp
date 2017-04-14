@@ -31,7 +31,7 @@ int main( int _argc, char** _argv ) {
 	VertexStructure::init();
 
 	AssetLoader sphere;
-	sphere.LoadAsset( "Objects/sphere2.obj" );
+	sphere.LoadAsset( "Objects/sphere3.obj" );
 
 	uint16_t vertexBuffer = GraphicsInterface::CreateVertexBuffer(sphere);
 	uint16_t indexBuffer = GraphicsInterface::CreateIndexBuffer(sphere);
@@ -45,7 +45,7 @@ int main( int _argc, char** _argv ) {
 	// Get view matrix
 	glm::vec3 up( 0.0f, 0.0f, 1.0f );
 	glm::vec3 center( 0.0f, 0.0f, 0.0f );
-	glm::vec3 eye( 0.0f, -25.0f, 0.0f );
+	glm::vec3 eye( 0.0f, 1.0f, -4.0f );
 	glm::mat4 view = glm::lookAt( eye, center, up );
 
 	// Get perspective matrix
