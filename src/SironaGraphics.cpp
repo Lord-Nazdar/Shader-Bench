@@ -79,7 +79,20 @@ uint16_t GraphicsInterface::CreateTexture( const std::string &filename ) {
 }
 
 uint16_t GraphicsInterface::CreateVertexBuffer( const AssetLoader& asset ) {
-	return 0;
+	// Prepare vx data
+	/// TODO: Optimize that by changing input structure
+	std::vector<glm::vec3> vertexData;
+	for ( auto data : asset.AssetVertexData ) {
+		vertexData.push_back( glm::vec3{ data.x, data.y, data.z } );
+	}
+
+	GLuint vertexBufferID = 0;
+	glGenBuffers( 1, &vertexBufferID );
+
+	glBindBuffer( GL_ARRAY_BUFFER, vertexBufferID );
+	glBufferData( GL_ARRAY_BUFFER, vertexData.size() * sizeof( glm::vec3 ), &vertexData[0], GL_STATIC_DRAW );
+
+	return vertexBufferID;
 }
 
 uint16_t GraphicsInterface::CreateIndexBuffer( const AssetLoader& asset ) {
