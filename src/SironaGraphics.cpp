@@ -1,22 +1,15 @@
 #ifdef Sirona_Graphics_Interface
 
 #include "GraphicsInterface.h"
-#include <gl\GL.h>
-
-typedef void (GLAPIENTRY *PFNGENVERTEXARRAYS)(GLsizei n, GLuint *arrays);
-PFNGENVERTEXARRAYS glGenVertexArrays = nullptr;
-
-typedef void (GLAPIENTRY *PFNBINDVERTEXARRAYS)(GLuint arrays);
-PFNBINDVERTEXARRAYS glBindVertexArray = nullptr;
+#include "SironaLoader.h"
+#include "Filesystem.h"
+#include <vector>
 
 void GraphicsInterface::Initialize( GLFWwindow* window, const uint16_t width, const uint16_t height ) {
 	glfwMakeContextCurrent( window );
 
-	glGenVertexArrays = (PFNGENVERTEXARRAYS) wglGetProcAddress( "glGenVertexArrays" );
-	assert( glGenVertexArrays != nullptr );
-
-	glBindVertexArray = (PFNBINDVERTEXARRAYS) wglGetProcAddress( "glBindVertexArray" );
-	assert( glBindVertexArray != nullptr );
+	// Init GL extensions
+	SironaInit();
 
 	GLuint vertexArray;
 	glGenVertexArrays( 1, &vertexArray );
@@ -24,8 +17,28 @@ void GraphicsInterface::Initialize( GLFWwindow* window, const uint16_t width, co
 
 }
 
-uint16_t GraphicsInterface::CreateShader( const std::string &filname ) {
-	return 0;
+uint16_t GraphicsInterface::CreateShader( const std::string &filename, const ShaderType type ) {
+	// Load the shader from file
+	std::string shaderCode = Filesystem::ReadFile( filename );
+	char const * shaderSourcePointer = shaderCode.c_str();
+
+	GLuint shaderID = 0;
+	shaderID = glCreateShader( type );
+	glShaderSource( shaderID, 1, &shaderSourcePointer, nullptr );
+	glCompileShader( shaderID );
+	
+	GLint result;
+	int LogLength;
+
+	glGetShaderiv( shaderID, GL_COMPILE_STATUS, &result );
+	glGetShaderiv( shaderID, GL_INFO_LOG_LENGTH, &LogLength );
+	if ( LogLength > 0 ){
+		std::vector<char> VertexShaderErrorMessage(LogLength+1);
+		glGetShaderInfoLog(shaderID, LogLength, NULL, &VertexShaderErrorMessage[0]);
+		printf("%s\n", &VertexShaderErrorMessage[0]);
+	}
+
+	return shaderID;
 }
 
 uint16_t GraphicsInterface::CreateProgram( const uint16_t vertexShader, const uint16_t fragmentShader ) {

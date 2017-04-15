@@ -126,17 +126,20 @@
     <ClCompile Include="..\src\Filesystem.cpp" />
     <ClCompile Include="..\src\shader-bench.cpp" />
     <ClCompile Include="..\src\SironaGraphics.cpp" />
+    <ClCompile Include="..\src\SironaLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\res\shaders\cube.fs.sc" />
-    <None Include="..\res\shaders\cube.vs.sc" />
+    <None Include="..\res\shaders\cube.fs" />
+    <None Include="..\res\shaders\cube.vs" />
     <None Include="..\res\shaders\varying.def.sc" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\3rdparty\lodepng\lodepng.h" />
     <ClInclude Include="..\src\AssetLoader.h" />
     <ClInclude Include="..\src\Filesystem.h" />
+    <ClInclude Include="..\src\glext.h" />
     <ClInclude Include="..\src\GraphicsInterface.h" />
+    <ClInclude Include="..\src\SironaLoader.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

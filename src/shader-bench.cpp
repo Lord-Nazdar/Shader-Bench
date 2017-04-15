@@ -12,8 +12,8 @@
 #include "AssetLoader.h"
 
 void ReloadProgram( uint16_t &program) {
-	uint16_t vertexShader = GraphicsInterface::CreateShader( "Shaders/cube.vs.bin" );
-	uint16_t fragmentShader = GraphicsInterface::CreateShader( "Shaders/cube.fs.bin" );
+	uint16_t vertexShader = GraphicsInterface::CreateShader( "Shaders/cube.vs", GraphicsInterface::ShaderType::VERTEX_SHADER );
+	uint16_t fragmentShader = GraphicsInterface::CreateShader( "Shaders/cube.fs", GraphicsInterface::ShaderType::FRAGMENT_SHADER );
 	program = GraphicsInterface::CreateProgram( vertexShader, fragmentShader );
 }
 
@@ -44,8 +44,8 @@ int main( int _argc, char** _argv ) {
 	uint16_t vertexBuffer = GraphicsInterface::CreateVertexBuffer(sphere);
 	uint16_t indexBuffer = GraphicsInterface::CreateIndexBuffer(sphere);
 	
-	uint16_t vertexShader = GraphicsInterface::CreateShader( "Shaders/cube.vs.bin" );
-	uint16_t fragmentShader = GraphicsInterface::CreateShader( "Shaders/cube.fs.bin" );
+	uint16_t vertexShader = GraphicsInterface::CreateShader( "Shaders/cube.vs", GraphicsInterface::ShaderType::VERTEX_SHADER );
+	uint16_t fragmentShader = GraphicsInterface::CreateShader( "Shaders/cube.fs", GraphicsInterface::ShaderType::FRAGMENT_SHADER );
 	uint16_t program = GraphicsInterface::CreateProgram( vertexShader, fragmentShader );
 	uint16_t normalMapLocation = GraphicsInterface::GetUniformLocation( "s_texNormal", GraphicsInterface::UniformType::INT1 );
 	uint16_t normalMapTexture = GraphicsInterface::CreateTexture( "Textures/NormalSphere.png" );

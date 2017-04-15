@@ -2,7 +2,7 @@
 #define GLFW_EXPOSE_NATIVE_WIN32
 
 #include <GLFW\glfw3.h>
-#include <GLFW\glfw3native.h>
+#include "glext.h"
 #include <memory>
 #include <string>
 #include <glm.hpp>
@@ -11,7 +11,13 @@ class AssetLoader;
 
 namespace GraphicsInterface {
 	void Initialize( GLFWwindow* window, const uint16_t width, const uint16_t height );
-	uint16_t CreateShader( const std::string &filname );
+
+	enum ShaderType {
+		VERTEX_SHADER = GL_VERTEX_SHADER,
+		FRAGMENT_SHADER = GL_FRAGMENT_SHADER
+	};
+
+	uint16_t CreateShader( const std::string &filename, const ShaderType type );
 	uint16_t CreateProgram( const uint16_t vertexShader, const uint16_t fragmentShader );
 
 	enum UniformType {

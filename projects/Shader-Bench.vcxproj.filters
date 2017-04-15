@@ -33,15 +33,18 @@
     <ClCompile Include="..\src\SironaGraphics.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\SironaLoader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\res\shaders\cube.vs.sc">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="..\res\shaders\cube.fs.sc">
-      <Filter>Resource Files</Filter>
-    </None>
     <None Include="..\res\shaders\varying.def.sc">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\res\shaders\cube.vs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\res\shaders\cube.fs">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>
@@ -57,6 +60,12 @@
     </ClInclude>
     <ClInclude Include="..\src\AssetLoader.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\SironaLoader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\glext.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -24,7 +24,7 @@ void GraphicsInterface::Initialize( GLFWwindow* window, const uint16_t width, co
 	bgfx::setViewClear( 0, BGFX_CLEAR_COLOR | BGFX_CLEAR_DEPTH, 0x151515ff );
 }
 
-uint16_t GraphicsInterface::CreateShader( const std::string &filename ) {
+uint16_t GraphicsInterface::CreateShader( const std::string &filename, const ShaderType type ) {
 	std::string shaderCode = Filesystem::ReadFile( filename );
 	const bgfx::Memory* memory = bgfx::copy( &shaderCode[0], shaderCode.length() );
 
