@@ -26,5 +26,26 @@ extern PFNGLGETSHADERIVPROC glGetShaderiv;
 // glGetShaderInfoLog
 extern PFNGLGETSHADERINFOLOGPROC glGetShaderInfoLog;
 
+// glDeleteShader
+extern PFNGLDELETESHADERPROC glDeleteShader;
+
+// glCreateProgram
+extern PFNGLCREATEPROGRAMPROC glCreateProgram;
+
+// glAttachShader
+extern PFNGLATTACHSHADERPROC glAttachShader;
+
+// glDetachShader
+extern PFNGLDETACHSHADERPROC glDetachShader;
+
+// glLinkProgram
+extern PFNGLLINKPROGRAMPROC glLinkProgram;
+
+// glGetProgramiv
+extern PFNGLGETPROGRAMIVPROC glGetProgramiv;
+
+// glGetProgramInfoLog
+extern PFNGLGETPROGRAMINFOLOGPROC glGetProgramInfoLog;
+
 // Initialize all GL extensions
 void SironaInit();

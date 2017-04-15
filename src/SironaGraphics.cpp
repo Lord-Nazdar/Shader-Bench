@@ -28,13 +28,13 @@ uint16_t GraphicsInterface::CreateShader( const std::string &filename, const Sha
 	glCompileShader( shaderID );
 	
 	GLint result;
-	int LogLength;
+	int logLength;
 
 	glGetShaderiv( shaderID, GL_COMPILE_STATUS, &result );
-	glGetShaderiv( shaderID, GL_INFO_LOG_LENGTH, &LogLength );
-	if ( LogLength > 0 ){
-		std::vector<char> VertexShaderErrorMessage(LogLength+1);
-		glGetShaderInfoLog(shaderID, LogLength, NULL, &VertexShaderErrorMessage[0]);
+	glGetShaderiv( shaderID, GL_INFO_LOG_LENGTH, &logLength );
+	if ( logLength > 0 ){
+		std::vector<char> VertexShaderErrorMessage(logLength+1);
+		glGetShaderInfoLog(shaderID, logLength, NULL, &VertexShaderErrorMessage[0]);
 		printf("%s\n", &VertexShaderErrorMessage[0]);
 	}
 
@@ -42,7 +42,31 @@ uint16_t GraphicsInterface::CreateShader( const std::string &filename, const Sha
 }
 
 uint16_t GraphicsInterface::CreateProgram( const uint16_t vertexShader, const uint16_t fragmentShader ) {
-	return 0;
+	GLuint programID;
+	programID = glCreateProgram();
+	
+	glAttachShader( programID, vertexShader );
+	glAttachShader( programID, fragmentShader );
+
+	glLinkProgram( programID );
+	
+	GLint result;
+	int logLength;
+	glGetProgramiv(programID, GL_LINK_STATUS, &result);
+	glGetProgramiv(programID, GL_INFO_LOG_LENGTH, &logLength);
+	if ( logLength > 0 ){
+		std::vector<char> ProgramErrorMessage(logLength+1);
+		glGetProgramInfoLog(programID, logLength, NULL, &ProgramErrorMessage[0]);
+		printf("%s\n", &ProgramErrorMessage[0]);
+	}
+
+	glDetachShader( programID, vertexShader );
+	glDetachShader( programID, fragmentShader );
+
+	glDeleteShader( vertexShader );
+	glDeleteShader( fragmentShader );
+
+	return programID;
 }
 
 uint16_t GraphicsInterface::GetUniformLocation( const std::string name, const UniformType type ) {

@@ -10,6 +10,13 @@ PFNGLSHADERSOURCEPROC glShaderSource = nullptr;
 PFNGLCOMPILESHADERPROC glCompileShader = nullptr;
 PFNGLGETSHADERIVPROC glGetShaderiv = nullptr;
 PFNGLGETSHADERINFOLOGPROC glGetShaderInfoLog = nullptr;
+PFNGLDELETESHADERPROC glDeleteShader = nullptr;
+PFNGLCREATEPROGRAMPROC glCreateProgram = nullptr;
+PFNGLATTACHSHADERPROC glAttachShader = nullptr;
+PFNGLLINKPROGRAMPROC glLinkProgram = nullptr;
+PFNGLGETPROGRAMIVPROC glGetProgramiv = nullptr;
+PFNGLGETPROGRAMINFOLOGPROC glGetProgramInfoLog = nullptr;
+PFNGLDETACHSHADERPROC glDetachShader = nullptr;
 
 void SironaInit() {
 	// Load vertex arrays related functions
@@ -34,4 +41,26 @@ void SironaInit() {
 	
 	glGetShaderInfoLog = (PFNGLGETSHADERINFOLOGPROC)wglGetProcAddress( "glGetShaderInfoLog" );
 	assert( glGetShaderInfoLog != nullptr );
+	
+	glDeleteShader = (PFNGLDELETESHADERPROC)wglGetProcAddress( "glDeleteShader" );
+	assert( glDeleteShader != nullptr );
+
+	// Load program related functions
+	glCreateProgram = (PFNGLCREATEPROGRAMPROC)wglGetProcAddress( "glCreateProgram" );
+	assert( glCreateProgram != nullptr );
+
+	glAttachShader = (PFNGLATTACHSHADERPROC)wglGetProcAddress( "glAttachShader" );
+	assert( glAttachShader != nullptr );
+
+	glDetachShader = (PFNGLDETACHSHADERPROC)wglGetProcAddress( "glDetachShader" );
+	assert( glDetachShader != nullptr );
+
+	glLinkProgram = (PFNGLLINKPROGRAMPROC)wglGetProcAddress( "glLinkProgram" );
+	assert( glLinkProgram != nullptr );
+
+	glGetProgramiv = (PFNGLGETPROGRAMIVPROC)wglGetProcAddress( "glGetProgramiv" );
+	assert( glGetProgramiv != nullptr );
+
+	glGetProgramInfoLog = (PFNGLGETPROGRAMINFOLOGPROC)wglGetProcAddress( "glGetProgramInfoLog" );
+	assert( glGetProgramInfoLog != nullptr );
 }
