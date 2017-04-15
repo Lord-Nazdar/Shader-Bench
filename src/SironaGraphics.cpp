@@ -106,7 +106,6 @@ uint16_t GraphicsInterface::CreateIndexBuffer( const AssetLoader& asset ) {
 }
 
 void GraphicsInterface::SetViewport( const uint16_t x, const uint16_t y, const uint16_t width, const uint16_t height ) {
-
 }
 
 void GraphicsInterface::SetProjectionViewTransform( const glm::mat4 &view, const glm::mat4 &projection ) {
@@ -122,15 +121,23 @@ void GraphicsInterface::BindTexture( const uint8_t stage, const uint16_t locatio
 }
 
 void GraphicsInterface::SubmitDummyDrawcall() {
-
+	glBindVertexArray( 0 );
 }
 
-void GraphicsInterface::SubmitDrawcall( const uint16_t vertexBuffer, const uint16_t indexBuffer, const uint16_t program ) {
-
+void GraphicsInterface::SubmitDrawcall( const uint16_t vertexBuffer, const uint16_t indexBuffer, const uint16_t program, const AssetLoader& asset ) {
+	glClear( GL_COLOR_BUFFER_BIT );
+	
+	glBindBuffer( GL_ARRAY_BUFFER, vertexBuffer );
+	glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, indexBuffer );
+	
+	glVertexAttribPointer( 0, 3, GL_FLOAT, GL_FALSE, 0, nullptr );
+	glDrawElements( GL_TRIANGLES, asset.Indices.size(), GL_UNSIGNED_INT, nullptr );
 }
 
-void GraphicsInterface::SwapBuffers() {
+void GraphicsInterface::SwapBuffers( GLFWwindow* window ) {
+	glDisableVertexAttribArray( 0 );
 
+	glfwSwapBuffers( window );
 }
 
 void GraphicsInterface::Shutdown() {

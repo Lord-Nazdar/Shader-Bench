@@ -87,7 +87,7 @@ void GraphicsInterface::SubmitDummyDrawcall() {
 	bgfx::touch( 0 );
 }
 
-void GraphicsInterface::SubmitDrawcall( const uint16_t vertexBuffer, const uint16_t indexBuffer, const uint16_t program ) {
+void GraphicsInterface::SubmitDrawcall( const uint16_t vertexBuffer, const uint16_t indexBuffer, const uint16_t program, const AssetLoader& asset ) {
 	bgfx::setVertexBuffer( bgfx::VertexBufferHandle{ vertexBuffer } );
 	bgfx::setIndexBuffer( bgfx::IndexBufferHandle{ indexBuffer } );
 	bgfx::setState( 0 | BGFX_STATE_RGB_WRITE
@@ -100,7 +100,7 @@ void GraphicsInterface::SubmitDrawcall( const uint16_t vertexBuffer, const uint1
 	bgfx::submit( 0, bgfx::ProgramHandle{ program } );
 }
 
-void GraphicsInterface::SwapBuffers() {
+void GraphicsInterface::SwapBuffers( GLFWwindow* window ) {
 	bgfx::frame();
 }
 

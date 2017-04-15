@@ -38,9 +38,9 @@ namespace GraphicsInterface {
 
 	void BindTexture( const uint8_t stage, const uint16_t location, const uint16_t texture );
 	void SubmitDummyDrawcall();
-	void SubmitDrawcall( const uint16_t vertexBuffer, const uint16_t indexBuffer, const uint16_t program );
+	void SubmitDrawcall( const uint16_t vertexBuffer, const uint16_t indexBuffer, const uint16_t program, const AssetLoader& asset );
 
-	void SwapBuffers();
+	void SwapBuffers( GLFWwindow* window );
 
 	void Shutdown();
 }

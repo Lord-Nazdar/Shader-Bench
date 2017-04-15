@@ -11,6 +11,12 @@ extern PFNGLGENVERTEXARRAYSPROC glGenVertexArrays;
 // glBindVertexArray
 extern PFNGLBINDVERTEXARRAYPROC glBindVertexArray;
 
+// glEnableVertexAttribArray
+extern PFNGLENABLEVERTEXARRAYATTRIBPROC glEnableVertexAttribArray;
+
+// glDisableVertexAttribArray
+extern PFNGLDISABLEVERTEXATTRIBARRAYPROC glDisableVertexAttribArray;
+
 // glCreateShader
 extern PFNGLCREATESHADERPROC glCreateShader;
 
@@ -55,6 +61,9 @@ extern PFNGLBINDBUFFERPROC glBindBuffer;
 
 // glBufferData
 extern PFNGLBUFFERDATAPROC glBufferData;
+
+// glVertexAttribPointer
+extern PFNGLVERTEXATTRIBPOINTERPROC glVertexAttribPointer;
 
 // Initialize all GL extensions
 void SironaInit();

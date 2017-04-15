@@ -5,6 +5,8 @@
 
 PFNGLGENVERTEXARRAYSPROC glGenVertexArrays = nullptr;
 PFNGLBINDVERTEXARRAYPROC glBindVertexArray = nullptr;
+PFNGLENABLEVERTEXARRAYATTRIBPROC glEnableVertexAttribArray = nullptr;
+PFNGLDISABLEVERTEXATTRIBARRAYPROC glDisableVertexAttribArray = nullptr;
 
 PFNGLCREATESHADERPROC glCreateShader = nullptr;
 PFNGLSHADERSOURCEPROC glShaderSource = nullptr;
@@ -24,13 +26,21 @@ PFNGLGENBUFFERSPROC glGenBuffers = nullptr;
 PFNGLBINDBUFFERPROC glBindBuffer = nullptr;
 PFNGLBUFFERDATAPROC glBufferData = nullptr;
 
+PFNGLVERTEXATTRIBPOINTERPROC glVertexAttribPointer = nullptr;
+
 void SironaInit() {
-	// Load vertex arrays related functions
+	// Load vertex attrib arrays related functions
 	glGenVertexArrays = (PFNGLGENVERTEXARRAYSPROC) wglGetProcAddress( "glGenVertexArrays" );
 	assert( glGenVertexArrays != nullptr );
 
 	glBindVertexArray = (PFNGLBINDVERTEXARRAYPROC) wglGetProcAddress( "glBindVertexArray" );
 	assert( glBindVertexArray != nullptr );
+
+	glEnableVertexAttribArray = (PFNGLENABLEVERTEXARRAYATTRIBPROC) wglGetProcAddress( "glEnableVertexAttribArray" );
+	assert( glEnableVertexAttribArray != nullptr );
+	
+	glDisableVertexAttribArray = (PFNGLDISABLEVERTEXATTRIBARRAYPROC) wglGetProcAddress( "glDisableVertexAttribArray" );
+	assert( glDisableVertexAttribArray != nullptr );
 
 	// Load shader related functions
 	glCreateShader = (PFNGLCREATESHADERPROC)wglGetProcAddress( "glCreateShader" );
@@ -79,4 +89,8 @@ void SironaInit() {
 
 	glBufferData = (PFNGLBUFFERDATAPROC)wglGetProcAddress( "glBufferData" );
 	assert( glBufferData != nullptr );
+
+	// Load draw related functions
+	glVertexAttribPointer = (PFNGLVERTEXATTRIBPOINTERPROC)wglGetProcAddress( "glVertexAttribPointer" );
+	assert( glVertexAttribPointer != nullptr );
 }

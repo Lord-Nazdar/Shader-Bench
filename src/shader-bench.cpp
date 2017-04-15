@@ -69,10 +69,10 @@ int main( int _argc, char** _argv ) {
 		GraphicsInterface::SubmitDummyDrawcall();
 
 		GraphicsInterface::BindTexture( 0, normalMapLocation, normalMapTexture );
-		GraphicsInterface::SubmitDrawcall( vertexBuffer, indexBuffer, program );
+		GraphicsInterface::SubmitDrawcall( vertexBuffer, indexBuffer, program, sphere );
 
 
-		GraphicsInterface::SwapBuffers();
+		GraphicsInterface::SwapBuffers( window );
 
 		if ( glfwGetKey( window, GLFW_KEY_ENTER ) == GLFW_PRESS && !key_enterPressed) {
 			ReloadProgram( program );
