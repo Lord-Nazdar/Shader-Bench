@@ -24,7 +24,7 @@ void GraphicsInterface::Initialize( GLFWwindow* window, const uint16_t width, co
 	bgfx::setViewClear( 0, BGFX_CLEAR_COLOR | BGFX_CLEAR_DEPTH, 0x151515ff );
 }
 
-uint16_t GraphicsInterface::CreateShader( const std::string &filename ) {
+uint16_t GraphicsInterface::CreateShader( const std::string &filename, const ShaderType type ) {
 	std::string shaderCode = Filesystem::ReadFile( filename );
 	const bgfx::Memory* memory = bgfx::copy( &shaderCode[0], shaderCode.length() );
 
@@ -38,7 +38,7 @@ uint16_t GraphicsInterface::CreateProgram( const uint16_t vertexShader, const ui
 	return bgfx::createProgram( h_vertexShader, h_fragmentShader ).idx;
 }
 
-uint16_t GraphicsInterface::GetUniformLocation( const std::string name, const UniformType type ) {
+uint16_t GraphicsInterface::GetUniformLocation( const uint16_t program, const std::string name, const UniformType type ) {
 	bgfx::UniformType::Enum uniformType = static_cast<bgfx::UniformType::Enum>(static_cast<int>(type));
 	return bgfx::createUniform( name.c_str(), uniformType ).idx;
 }
@@ -71,7 +71,7 @@ void GraphicsInterface::SetViewport( const uint16_t x, const uint16_t y, const u
 }
 
 
-void GraphicsInterface::SetProjectionViewTransform( const glm::mat4 & view, const glm::mat4 & projection ) {
+void GraphicsInterface::SetProjectionViewTransform( const uint16_t program, const glm::mat4 & view, const glm::mat4 & projection ) {
 	bgfx::setViewTransform( 0, &view, &projection );
 }
 
@@ -87,7 +87,7 @@ void GraphicsInterface::SubmitDummyDrawcall() {
 	bgfx::touch( 0 );
 }
 
-void GraphicsInterface::SubmitDrawcall( const uint16_t vertexBuffer, const uint16_t indexBuffer, const uint16_t program ) {
+void GraphicsInterface::SubmitDrawcall( const uint16_t vertexBuffer, const uint16_t indexBuffer, const uint16_t program, const AssetLoader& asset ) {
 	bgfx::setVertexBuffer( bgfx::VertexBufferHandle{ vertexBuffer } );
 	bgfx::setIndexBuffer( bgfx::IndexBufferHandle{ indexBuffer } );
 	bgfx::setState( 0 | BGFX_STATE_RGB_WRITE
@@ -100,7 +100,7 @@ void GraphicsInterface::SubmitDrawcall( const uint16_t vertexBuffer, const uint1
 	bgfx::submit( 0, bgfx::ProgramHandle{ program } );
 }
 
-void GraphicsInterface::SwapBuffers() {
+void GraphicsInterface::SwapBuffers( GLFWwindow* window ) {
 	bgfx::frame();
 }
 
