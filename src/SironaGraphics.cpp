@@ -3,6 +3,7 @@
 #include "GraphicsInterface.h"
 #include "SironaLoader.h"
 #include "Filesystem.h"
+#include "AssetLoader.h"
 #include <vector>
 
 void GraphicsInterface::Initialize( GLFWwindow* window, const uint16_t width, const uint16_t height ) {
@@ -82,7 +83,13 @@ uint16_t GraphicsInterface::CreateVertexBuffer( const AssetLoader& asset ) {
 }
 
 uint16_t GraphicsInterface::CreateIndexBuffer( const AssetLoader& asset ) {
-	return 0;
+	GLuint indexBufferID = 0;
+	glGenBuffers( 1, &indexBufferID );
+
+	glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, indexBufferID );
+	glBufferData( GL_ELEMENT_ARRAY_BUFFER, asset.Indices.size() * sizeof( uint32_t ), &asset.Indices[0], GL_STATIC_DRAW );
+
+	return indexBufferID;
 }
 
 void GraphicsInterface::SetViewport( const uint16_t x, const uint16_t y, const uint16_t width, const uint16_t height ) {

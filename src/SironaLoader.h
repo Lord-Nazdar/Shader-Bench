@@ -47,5 +47,14 @@ extern PFNGLGETPROGRAMIVPROC glGetProgramiv;
 // glGetProgramInfoLog
 extern PFNGLGETPROGRAMINFOLOGPROC glGetProgramInfoLog;
 
+// glGenBuffers
+extern PFNGLGENBUFFERSPROC glGenBuffers;
+
+// glBindBuffer
+extern PFNGLBINDBUFFERPROC glBindBuffer;
+
+// glBufferData
+extern PFNGLBUFFERDATAPROC glBufferData;
+
 // Initialize all GL extensions
 void SironaInit();

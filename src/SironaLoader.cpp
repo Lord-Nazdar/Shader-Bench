@@ -5,18 +5,24 @@
 
 PFNGLGENVERTEXARRAYSPROC glGenVertexArrays = nullptr;
 PFNGLBINDVERTEXARRAYPROC glBindVertexArray = nullptr;
+
 PFNGLCREATESHADERPROC glCreateShader = nullptr;
 PFNGLSHADERSOURCEPROC glShaderSource = nullptr;
 PFNGLCOMPILESHADERPROC glCompileShader = nullptr;
 PFNGLGETSHADERIVPROC glGetShaderiv = nullptr;
 PFNGLGETSHADERINFOLOGPROC glGetShaderInfoLog = nullptr;
 PFNGLDELETESHADERPROC glDeleteShader = nullptr;
+
 PFNGLCREATEPROGRAMPROC glCreateProgram = nullptr;
 PFNGLATTACHSHADERPROC glAttachShader = nullptr;
 PFNGLLINKPROGRAMPROC glLinkProgram = nullptr;
 PFNGLGETPROGRAMIVPROC glGetProgramiv = nullptr;
 PFNGLGETPROGRAMINFOLOGPROC glGetProgramInfoLog = nullptr;
 PFNGLDETACHSHADERPROC glDetachShader = nullptr;
+
+PFNGLGENBUFFERSPROC glGenBuffers = nullptr;
+PFNGLBINDBUFFERPROC glBindBuffer = nullptr;
+PFNGLBUFFERDATAPROC glBufferData = nullptr;
 
 void SironaInit() {
 	// Load vertex arrays related functions
@@ -63,4 +69,14 @@ void SironaInit() {
 
 	glGetProgramInfoLog = (PFNGLGETPROGRAMINFOLOGPROC)wglGetProcAddress( "glGetProgramInfoLog" );
 	assert( glGetProgramInfoLog != nullptr );
+
+	// Load buffer related functions
+	glGenBuffers = (PFNGLGENBUFFERSPROC)wglGetProcAddress( "glGenBuffers" );
+	assert( glGenBuffers != nullptr );
+
+	glBindBuffer = (PFNGLBINDBUFFERPROC)wglGetProcAddress( "glBindBuffer" );
+	assert( glBindBuffer != nullptr );
+
+	glBufferData = (PFNGLBUFFERDATAPROC)wglGetProcAddress( "glBufferData" );
+	assert( glBufferData != nullptr );
 }
