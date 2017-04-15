@@ -70,8 +70,10 @@ uint16_t GraphicsInterface::CreateProgram( const uint16_t vertexShader, const ui
 	return programID;
 }
 
-uint16_t GraphicsInterface::GetUniformLocation( const std::string name, const UniformType type ) {
-	return 0;
+uint16_t GraphicsInterface::GetUniformLocation( const uint16_t program, const std::string name, const UniformType type ) {
+	GLint uniformID = glGetUniformLocation( program, name.c_str() );
+	assert( uniformID != -1 );
+	return uniformID;
 }
 
 uint16_t GraphicsInterface::CreateTexture( const std::string &filename ) {
@@ -108,8 +110,13 @@ uint16_t GraphicsInterface::CreateIndexBuffer( const AssetLoader& asset ) {
 void GraphicsInterface::SetViewport( const uint16_t x, const uint16_t y, const uint16_t width, const uint16_t height ) {
 }
 
-void GraphicsInterface::SetProjectionViewTransform( const glm::mat4 &view, const glm::mat4 &projection ) {
+void GraphicsInterface::SetProjectionViewTransform( const uint16_t program,  const glm::mat4 &view, const glm::mat4 &projection ) {
+	uint16_t viewProjectionID = GetUniformLocation( program, "v_viewProjection", UniformType::MAT4 );
 
+	glm::mat4 viewProjection = projection * view;
+	glUseProgram( program );
+
+	glUniformMatrix4fv( viewProjectionID, 1, GL_FALSE, &viewProjection[0][0] );
 }
 
 void GraphicsInterface::SetModelTransform( const glm::mat4 &model ) {
@@ -121,22 +128,21 @@ void GraphicsInterface::BindTexture( const uint8_t stage, const uint16_t locatio
 }
 
 void GraphicsInterface::SubmitDummyDrawcall() {
-	glBindVertexArray( 0 );
+	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 }
 
 void GraphicsInterface::SubmitDrawcall( const uint16_t vertexBuffer, const uint16_t indexBuffer, const uint16_t program, const AssetLoader& asset ) {
-	glClear( GL_COLOR_BUFFER_BIT );
+	glUseProgram( program );
 	
+	glEnableVertexAttribArray( 0 );
 	glBindBuffer( GL_ARRAY_BUFFER, vertexBuffer );
 	glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, indexBuffer );
-	
 	glVertexAttribPointer( 0, 3, GL_FLOAT, GL_FALSE, 0, nullptr );
 	glDrawElements( GL_TRIANGLES, asset.Indices.size(), GL_UNSIGNED_INT, nullptr );
+	glDisableVertexAttribArray( 0 );
 }
 
 void GraphicsInterface::SwapBuffers( GLFWwindow* window ) {
-	glDisableVertexAttribArray( 0 );
-
 	glfwSwapBuffers( window );
 }
 

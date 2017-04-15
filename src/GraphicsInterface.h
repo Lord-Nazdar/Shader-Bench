@@ -22,10 +22,11 @@ namespace GraphicsInterface {
 
 	enum UniformType {
 		INT1 = 0,
-		VEC4 = 2
+		VEC4 = 2,
+		MAT4 = 4
 	};
 
-	uint16_t GetUniformLocation( const std::string name, const UniformType type );
+	uint16_t GetUniformLocation( const uint16_t program, const std::string name, const UniformType type );
 	uint16_t CreateTexture( const std::string &filename );
 
 	uint16_t CreateVertexBuffer( const AssetLoader& asset );
@@ -33,7 +34,7 @@ namespace GraphicsInterface {
 
 	void SetViewport( const uint16_t x, const uint16_t y, const uint16_t width, const uint16_t height );
 
-	void SetProjectionViewTransform( const glm::mat4 &view, const glm::mat4 &projection );
+	void SetProjectionViewTransform( const uint16_t program, const glm::mat4 &view, const glm::mat4 &projection );
 	void SetModelTransform( const glm::mat4 &model );
 
 	void BindTexture( const uint8_t stage, const uint16_t location, const uint16_t texture );

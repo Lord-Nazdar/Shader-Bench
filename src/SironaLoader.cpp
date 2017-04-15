@@ -5,7 +5,7 @@
 
 PFNGLGENVERTEXARRAYSPROC glGenVertexArrays = nullptr;
 PFNGLBINDVERTEXARRAYPROC glBindVertexArray = nullptr;
-PFNGLENABLEVERTEXARRAYATTRIBPROC glEnableVertexAttribArray = nullptr;
+PFNGLENABLEVERTEXATTRIBARRAYPROC glEnableVertexAttribArray = nullptr;
 PFNGLDISABLEVERTEXATTRIBARRAYPROC glDisableVertexAttribArray = nullptr;
 
 PFNGLCREATESHADERPROC glCreateShader = nullptr;
@@ -21,12 +21,16 @@ PFNGLLINKPROGRAMPROC glLinkProgram = nullptr;
 PFNGLGETPROGRAMIVPROC glGetProgramiv = nullptr;
 PFNGLGETPROGRAMINFOLOGPROC glGetProgramInfoLog = nullptr;
 PFNGLDETACHSHADERPROC glDetachShader = nullptr;
+PFNGLUSEPROGRAMPROC glUseProgram = nullptr;
 
 PFNGLGENBUFFERSPROC glGenBuffers = nullptr;
 PFNGLBINDBUFFERPROC glBindBuffer = nullptr;
 PFNGLBUFFERDATAPROC glBufferData = nullptr;
 
 PFNGLVERTEXATTRIBPOINTERPROC glVertexAttribPointer = nullptr;
+
+PFNGLGETUNIFORMLOCATIONPROC glGetUniformLocation = nullptr;
+PFNGLUNIFORMMATRIX4FVPROC glUniformMatrix4fv = nullptr;
 
 void SironaInit() {
 	// Load vertex attrib arrays related functions
@@ -36,7 +40,7 @@ void SironaInit() {
 	glBindVertexArray = (PFNGLBINDVERTEXARRAYPROC) wglGetProcAddress( "glBindVertexArray" );
 	assert( glBindVertexArray != nullptr );
 
-	glEnableVertexAttribArray = (PFNGLENABLEVERTEXARRAYATTRIBPROC) wglGetProcAddress( "glEnableVertexAttribArray" );
+	glEnableVertexAttribArray = (PFNGLENABLEVERTEXATTRIBARRAYPROC) wglGetProcAddress( "glEnableVertexAttribArray" );
 	assert( glEnableVertexAttribArray != nullptr );
 	
 	glDisableVertexAttribArray = (PFNGLDISABLEVERTEXATTRIBARRAYPROC) wglGetProcAddress( "glDisableVertexAttribArray" );
@@ -80,6 +84,9 @@ void SironaInit() {
 	glGetProgramInfoLog = (PFNGLGETPROGRAMINFOLOGPROC)wglGetProcAddress( "glGetProgramInfoLog" );
 	assert( glGetProgramInfoLog != nullptr );
 
+	glUseProgram = (PFNGLUSEPROGRAMPROC)wglGetProcAddress( "glUseProgram" );
+	assert( glUseProgram != nullptr );
+
 	// Load buffer related functions
 	glGenBuffers = (PFNGLGENBUFFERSPROC)wglGetProcAddress( "glGenBuffers" );
 	assert( glGenBuffers != nullptr );
@@ -93,4 +100,11 @@ void SironaInit() {
 	// Load draw related functions
 	glVertexAttribPointer = (PFNGLVERTEXATTRIBPOINTERPROC)wglGetProcAddress( "glVertexAttribPointer" );
 	assert( glVertexAttribPointer != nullptr );
+
+	// Load uniforms related functions
+	glGetUniformLocation = (PFNGLGETUNIFORMLOCATIONPROC)wglGetProcAddress( "glGetUniformLocation" );
+	assert( glGetUniformLocation != nullptr );
+	
+	glUniformMatrix4fv = (PFNGLUNIFORMMATRIX4FVPROC)wglGetProcAddress( "glUniformMatrix4fv" );
+	assert( glUniformMatrix4fv != nullptr );
 }

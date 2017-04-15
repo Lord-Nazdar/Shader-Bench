@@ -38,7 +38,7 @@ uint16_t GraphicsInterface::CreateProgram( const uint16_t vertexShader, const ui
 	return bgfx::createProgram( h_vertexShader, h_fragmentShader ).idx;
 }
 
-uint16_t GraphicsInterface::GetUniformLocation( const std::string name, const UniformType type ) {
+uint16_t GraphicsInterface::GetUniformLocation( const uint16_t program, const std::string name, const UniformType type ) {
 	bgfx::UniformType::Enum uniformType = static_cast<bgfx::UniformType::Enum>(static_cast<int>(type));
 	return bgfx::createUniform( name.c_str(), uniformType ).idx;
 }
@@ -71,7 +71,7 @@ void GraphicsInterface::SetViewport( const uint16_t x, const uint16_t y, const u
 }
 
 
-void GraphicsInterface::SetProjectionViewTransform( const glm::mat4 & view, const glm::mat4 & projection ) {
+void GraphicsInterface::SetProjectionViewTransform( const uint16_t program, const glm::mat4 & view, const glm::mat4 & projection ) {
 	bgfx::setViewTransform( 0, &view, &projection );
 }
 
