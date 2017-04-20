@@ -12,8 +12,8 @@
 #include "AssetLoader.h"
 
 void ReloadProgram( uint16_t &program) {
-	uint16_t vertexShader = GraphicsInterface::CreateShader( "Shaders/cube.vs.bin" );
-	uint16_t fragmentShader = GraphicsInterface::CreateShader( "Shaders/cube.fs.bin" );
+	uint16_t vertexShader = GraphicsInterface::CreateShader( "Shaders/cube.vs", GraphicsInterface::ShaderType::VERTEX_SHADER );
+	uint16_t fragmentShader = GraphicsInterface::CreateShader( "Shaders/cube.fs", GraphicsInterface::ShaderType::FRAGMENT_SHADER );
 	program = GraphicsInterface::CreateProgram( vertexShader, fragmentShader );
 }
 
@@ -22,7 +22,15 @@ int main( int _argc, char** _argv ) {
 	uint16_t height = 720;
 
 	glfwInit();
+
+#ifdef BGFX_Graphics_Interface
 	glfwWindowHint( GLFW_CLIENT_API, GLFW_NO_API );
+#else
+	glfwWindowHint( GLFW_CONTEXT_VERSION_MAJOR, 4 );
+	glfwWindowHint( GLFW_CONTEXT_VERSION_MINOR, 5 );
+	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+#endif // BGFX_Graphics_Interface
+
 	glfwWindowHint( GLFW_RESIZABLE, false );
 	GLFWwindow* window = glfwCreateWindow( width, height, "Shader Bench", NULL, NULL );
 
@@ -31,40 +39,39 @@ int main( int _argc, char** _argv ) {
 	VertexStructure::init();
 
 	AssetLoader sphere;
-	sphere.LoadAsset( "Objects/sphere2.obj" );
+	sphere.LoadAsset( "Objects/sphere3.obj" );
 
 	uint16_t vertexBuffer = GraphicsInterface::CreateVertexBuffer(sphere);
 	uint16_t indexBuffer = GraphicsInterface::CreateIndexBuffer(sphere);
 	
-	uint16_t vertexShader = GraphicsInterface::CreateShader( "Shaders/cube.vs.bin" );
-	uint16_t fragmentShader = GraphicsInterface::CreateShader( "Shaders/cube.fs.bin" );
+	uint16_t vertexShader = GraphicsInterface::CreateShader( "Shaders/cube.vs", GraphicsInterface::ShaderType::VERTEX_SHADER );
+	uint16_t fragmentShader = GraphicsInterface::CreateShader( "Shaders/cube.fs", GraphicsInterface::ShaderType::FRAGMENT_SHADER );
 	uint16_t program = GraphicsInterface::CreateProgram( vertexShader, fragmentShader );
-	uint16_t normalMapLocation = GraphicsInterface::GetUniformLocation( "s_texNormal", GraphicsInterface::UniformType::INT1 );
-	uint16_t normalMapTexture = GraphicsInterface::CreateTexture( "Textures/NormalSphere.png" );
+	//uint16_t normalMapLocation = GraphicsInterface::GetUniformLocation( program, "s_texNormal", GraphicsInterface::UniformType::INT1 );
+	//uint16_t normalMapTexture = GraphicsInterface::CreateTexture( "Textures/NormalSphere.png" );
 
 	// Get view matrix
 	glm::vec3 up( 0.0f, 0.0f, 1.0f );
 	glm::vec3 center( 0.0f, 0.0f, 0.0f );
-	glm::vec3 eye( 0.0f, -25.0f, 0.0f );
+	glm::vec3 eye( 0.0f, 1.0f, -4.0f );
 	glm::mat4 view = glm::lookAt( eye, center, up );
 
 	// Get perspective matrix
 	glm::mat4 projection = glm::perspective( glm::radians(60.0f), float( width ) / float( height ), 0.1f, 100.0f );
 
-	GraphicsInterface::SetProjectionViewTransform( view, projection );
+	GraphicsInterface::SetProjectionViewTransform( program, view, projection );
 
 	bool key_enterPressed = false;
 	do {
-
 		GraphicsInterface::SetViewport( 0, 0, width, height );
 
 		GraphicsInterface::SubmitDummyDrawcall();
 
-		GraphicsInterface::BindTexture( 0, normalMapLocation, normalMapTexture );
-		GraphicsInterface::SubmitDrawcall( vertexBuffer, indexBuffer, program );
+		//GraphicsInterface::BindTexture( 0, normalMapLocation, normalMapTexture );
+		GraphicsInterface::SubmitDrawcall( vertexBuffer, indexBuffer, program, sphere );
 
 
-		GraphicsInterface::SwapBuffers();
+		GraphicsInterface::SwapBuffers( window );
 
 		if ( glfwGetKey( window, GLFW_KEY_ENTER ) == GLFW_PRESS && !key_enterPressed) {
 			ReloadProgram( program );
