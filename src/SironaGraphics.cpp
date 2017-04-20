@@ -88,11 +88,22 @@ uint16_t GraphicsInterface::CreateVertexBuffer( const AssetLoader& asset ) {
 		vertexData.push_back( glm::vec3{ data.x, data.y, data.z } );
 	}
 
+	std::vector<glm::vec3> normalData;
+	for ( auto data : asset.AssetVertexData ) {
+		normalData.push_back( glm::vec3{ data.nx, data.ny, data.nz } );
+	}
+
 	GLuint vertexBufferID = 0;
 	glGenBuffers( 1, &vertexBufferID );
 
 	glBindBuffer( GL_ARRAY_BUFFER, vertexBufferID );
 	glBufferData( GL_ARRAY_BUFFER, vertexData.size() * sizeof( glm::vec3 ), &vertexData[0], GL_STATIC_DRAW );
+
+	GLuint normalBufferID = 0;
+	glGenBuffers( 1, &normalBufferID );
+
+	glBindBuffer( GL_ARRAY_BUFFER, normalBufferID );
+	glBufferData( GL_ARRAY_BUFFER, normalData.size() * sizeof( glm::vec3 ), &normalData[0], GL_STATIC_DRAW );
 
 	return vertexBufferID;
 }
@@ -128,6 +139,9 @@ void GraphicsInterface::BindTexture( const uint8_t stage, const uint16_t locatio
 }
 
 void GraphicsInterface::SubmitDummyDrawcall() {
+	glEnable( GL_DEPTH_TEST );
+	glDepthFunc( GL_LESS );
+
 	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 }
 
@@ -135,9 +149,12 @@ void GraphicsInterface::SubmitDrawcall( const uint16_t vertexBuffer, const uint1
 	glUseProgram( program );
 	
 	glEnableVertexAttribArray( 0 );
-	glBindBuffer( GL_ARRAY_BUFFER, vertexBuffer );
+	glEnableVertexAttribArray( 1 );
 	glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, indexBuffer );
+	glBindBuffer( GL_ARRAY_BUFFER, vertexBuffer );
 	glVertexAttribPointer( 0, 3, GL_FLOAT, GL_FALSE, 0, nullptr );
+	glBindBuffer( GL_ARRAY_BUFFER, vertexBuffer+1 );
+	glVertexAttribPointer( 1, 3, GL_FLOAT, GL_FALSE, 0, nullptr );
 	glDrawElements( GL_TRIANGLES, asset.Indices.size(), GL_UNSIGNED_INT, nullptr );
 	glDisableVertexAttribArray( 0 );
 }
